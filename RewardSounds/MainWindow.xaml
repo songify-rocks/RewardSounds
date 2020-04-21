@@ -8,20 +8,31 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <DataGrid x:Name="dgv_sounds" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="772"  CanUserAddRows="False" CanUserSortColumns="False">
+        <DataGrid x:Name="dgv_sounds" HorizontalAlignment="Left" Height="385" Margin="10,24,0,0" VerticalAlignment="Top" Width="772"  CanUserAddRows="False" CanUserSortColumns="False" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}" Width="200"/>
                 <DataGridTextColumn Header="Path" Binding="{Binding Path, Mode=OneWay}" Width="*"/>
+                <DataGridTextColumn Header="UserLevel" Binding="{Binding UserLevel, Mode=OneTime}"/>
                 <DataGridTextColumn Header="RewardID" Binding="{Binding RewardID, Mode=OneWay}" MinWidth="100" />
-                <DataGridCheckBoxColumn Header="Active" Binding="{Binding IsActive, Mode=OneWay}" MinWidth="50" />
+                <DataGridCheckBoxColumn Header="Active" Binding="{Binding IsActive, Mode=OneWay}"   MinWidth="50" />
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="New" Click="Dgv_Add"/>
+                    <MenuItem Header="Edit">
+                        <MenuItem Header="Enable / Disable" Click="Dgv_EnableDisable"/>
+                        <MenuItem Header="Modify" Click="Dgv_Modify"/>
+                    </MenuItem>
                     <MenuItem Header="Delete" Click="Dgv_Delete"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
+        <Menu HorizontalAlignment="Left" Height="19" VerticalAlignment="Top" Width="792">
+            <MenuItem Header="File">
+                <MenuItem Header="Settings" Click="MenuItem_Click_1"/>
+                <MenuItem Header="Close" Click="MenuItem_Click"/>
+            </MenuItem>
+        </Menu>
 
     </Grid>
 </Window>

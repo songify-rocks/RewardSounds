@@ -1,0 +1,19 @@
+﻿<Window x:Class="RewardSounds.Window_Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RewardSounds"
+        mc:Ignorable="d"
+        Title="Window_Settings" Height="168.374" Width="356.013" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid>
+        <Label Content="Twitch Account" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Twitch oAuth" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <Label Content="Twitch Channel" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tb_Twitchname" HorizontalAlignment="Left" Height="23" Margin="105,13,0,0" TextWrapping="NoWrap"  VerticalAlignment="Top" Width="216" TextChanged="tb_Twitchname_TextChanged"/>
+        <PasswordBox x:Name="tb_TwitchOauth" HorizontalAlignment="Left" Height="23" Margin="105,44,0,0" VerticalAlignment="Top" Width="216" PasswordChanged="tb_TwitchOauth_PasswordChanged"/>
+        <TextBox x:Name="tb_TwitchChannel" HorizontalAlignment="Left" Height="23" Margin="105,75,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="216" TextChanged="tb_TwitchChannel_TextChanged"/>
+        <CheckBox x:Name="Chk_Autoconnect" Content="Autoconnect" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Checked="Chk_Autoconnect_Checked" Unchecked="Chk_Autoconnect_Checked"/>
+
+    </Grid>
+</Window>

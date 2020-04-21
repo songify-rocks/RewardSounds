@@ -1,6 +1,8 @@
 ﻿using RewardSounds.Models;
+using RewardSounds.Util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace RewardSounds
     /// </summary>
     public partial class MainWindow : Window
     {
-        static List<SoundObject> soundObjects;
+        public ObservableCollection<SoundObject> soundObjects = new ObservableCollection<SoundObject>();
 
         public MainWindow()
         {
@@ -30,29 +32,72 @@ namespace RewardSounds
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            soundObjects = new List<SoundObject>();
+            if (Properties.Settings.Default.twitch_autoconnect)
+                Twitch.BotConnect();
+
             LoadConfig();
+            AddItems(soundObjects);
+            soundObjects.CollectionChanged += SoundObjects_CollectionChanged;
+        }
+
+        private void SoundObjects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            SaveConfig();
+        }
+
+        private void SaveConfig()
+        {
+            Config.WriteToJsonFile("config.json", soundObjects);
+            AddItems(soundObjects);
+        }
+
+        public void AddItems(ObservableCollection<SoundObject> soundObjects)
+        {
+            dgv_sounds.Items.Clear();
+            foreach (SoundObject soundObject in soundObjects)
+            {
+                dgv_sounds.Items.Add(soundObject);
+            }
         }
 
         private void LoadConfig()
         {
-
-        }
-
-        private void AddSound(SoundObject soundObject)
-        {
-            soundObjects.Add(soundObject);
+            soundObjects = Config.ReadFromJsonFile<ObservableCollection<SoundObject>>("config.json");
         }
 
         private void Dgv_Delete(object sender, RoutedEventArgs e)
         {
-
+            soundObjects.Remove((SoundObject)dgv_sounds.SelectedItem);
         }
 
         private void Dgv_Add(object sender, RoutedEventArgs e)
         {
             Window_SoundAdd window_SoundAdd = new Window_SoundAdd();
             window_SoundAdd.ShowDialog();
+        }
+
+        private void Dgv_EnableDisable(object sender, RoutedEventArgs e)
+        {
+            soundObjects.Where(so => so.Name == (dgv_sounds.SelectedItem as SoundObject).Name).Select(usr => { usr.IsActive = !usr.IsActive; return usr; }).ToList();
+            SaveConfig();
+        }
+
+        private void Dgv_Modify(object sender, RoutedEventArgs e)
+        {
+            SoundObject soundObject = (SoundObject)dgv_sounds.SelectedItem;
+            Window_SoundAdd window_SoundAdd = new Window_SoundAdd(soundObject);
+            window_SoundAdd.ShowDialog();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            Window_Settings _Settings = new Window_Settings();
+            _Settings.ShowDialog();
         }
     }
 }
