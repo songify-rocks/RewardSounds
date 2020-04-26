@@ -78,6 +78,8 @@ namespace RewardSounds
 
         private void Dgv_EnableDisable(object sender, RoutedEventArgs e)
         {
+            if (dgv_sounds.SelectedItem == null)
+                return;
             soundObjects.Where(so => so.Name == (dgv_sounds.SelectedItem as SoundObject).Name).Select(usr => { usr.IsActive = !usr.IsActive; return usr; }).ToList();
             SaveConfig();
         }
@@ -98,6 +100,48 @@ namespace RewardSounds
         {
             Window_Settings _Settings = new Window_Settings();
             _Settings.ShowDialog();
+        }
+
+        private void btn_TwitchConnect(object sender, RoutedEventArgs e)
+        {
+            if (Twitch.IsConnected())
+            {
+                Twitch._client.Disconnect();
+            }
+            else
+            {
+                Twitch.BotConnect();
+            }
+        }
+
+        private void MenuItem_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (!Twitch.IsConnected())
+            {
+                btn_twitchConnect.IsEnabled = true;
+                btn_twitchDisconnect.IsEnabled = false;
+            }
+            else
+            {
+                btn_twitchConnect.IsEnabled = false;
+                btn_twitchDisconnect.IsEnabled = true;
+            }
+        }
+
+        private void dgv_Context_Opened(object sender, RoutedEventArgs e)
+        {
+            if (dgv_sounds.SelectedItem == null)
+            {
+                (dgv_Context.Items[1] as MenuItem).IsEnabled = false;
+                (dgv_Context.Items[2] as MenuItem).IsEnabled = false;
+            }
+            else
+            {
+                foreach (MenuItem item in dgv_Context.Items)
+                {
+                    item.IsEnabled = true;
+                }
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
-        <DataGrid x:Name="dgv_sounds" HorizontalAlignment="Left" Height="385" Margin="10,24,0,0" VerticalAlignment="Top" Width="772"  CanUserAddRows="False" CanUserSortColumns="False" SelectionMode="Single">
+        <DataGrid x:Name="dgv_sounds" HorizontalAlignment="Left" Height="360" Margin="10,24,0,0" VerticalAlignment="Top" Width="772"  CanUserAddRows="False" CanUserSortColumns="False" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}" Width="200"/>
                 <DataGridTextColumn Header="Path" Binding="{Binding Path, Mode=OneWay}" Width="*"/>
@@ -17,7 +17,7 @@
                 <DataGridCheckBoxColumn Header="Active" Binding="{Binding IsActive, Mode=OneWay}"   MinWidth="50" />
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
-                <ContextMenu>
+                <ContextMenu x:Name="dgv_Context" Opened="dgv_Context_Opened">
                     <MenuItem Header="New" Click="Dgv_Add"/>
                     <MenuItem Header="Edit">
                         <MenuItem Header="Enable / Disable" Click="Dgv_EnableDisable"/>
@@ -32,7 +32,13 @@
                 <MenuItem Header="Settings" Click="MenuItem_Click_1"/>
                 <MenuItem Header="Close" Click="MenuItem_Click"/>
             </MenuItem>
+            <MenuItem Header="Twitch" MouseEnter="MenuItem_MouseEnter">
+                <MenuItem x:Name="btn_twitchConnect" Header="Connect" Click="btn_TwitchConnect"/>
+                <MenuItem x:Name="btn_twitchDisconnect" Header="Disconnect" Click="btn_TwitchConnect"/>
+            </MenuItem>
         </Menu>
-
+        <StatusBar HorizontalAlignment="Left" Height="30" Margin="0,389,0,0" VerticalAlignment="Top" Width="792">
+            <Label x:Name="lbl_Status" Content="Connected to twitch" Padding="5,0" Height="23"/>
+        </StatusBar>
     </Grid>
 </Window>

@@ -20,7 +20,7 @@
         <Label Content="Userlevel" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.459,0.256"/>
         <ComboBox x:Name="cbx_userlevel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="88,102,0,0" SelectedIndex="0">
             <ComboBoxItem Content="Everyone"/>
-            <ComboBoxItem Content="Subscirber"/>
+            <ComboBoxItem Content="Subscriber"/>
             <ComboBoxItem Content="Moderator"/>
             <ComboBoxItem Content="Broadcaster"/>
         </ComboBox>

@@ -59,7 +59,7 @@ namespace RewardSounds.Util
 
         private static void _client_OnDisconnected(object sender, TwitchLib.Communication.Events.OnDisconnectedEventArgs e)
         {
-
+            UpdateMainWindowStatus("Disconnected from Twitch");
         }
 
         private static void CooldownTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -69,7 +69,26 @@ namespace RewardSounds.Util
 
         private static void _client_OnConnected(object sender, OnConnectedArgs e)
         {
+            UpdateMainWindowStatus("Connected to Twitch");
+        }
 
+        private static void UpdateMainWindowStatus(string msg)
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window.GetType() == typeof(MainWindow))
+                    {
+                        (window as MainWindow).lbl_Status.Content = msg;
+                    }
+                }
+            }));
+        }
+
+        public static bool IsConnected()
+        {
+            return _client.IsConnected;
         }
 
         private static void _client_OnMessageReceived(object sender, OnMessageReceivedArgs e)
